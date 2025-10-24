@@ -120,7 +120,7 @@ export default function NichePage() {
                     onChange={(e) => setTargetNiche(e.target.value)}
                     onFocus={() => setIsDropdownOpen(true)}
                     placeholder="eg. Small Business Owners, Entrepreneurs, E-commerce Sellers..."
-                    className="w-full px-4 sm:px-6 py-3 sm:py-4 text-base sm:text-lg border-0 rounded-xl bg-white text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50 shadow-lg pr-10 sm:pr-12"
+                    className="w-full px-4 sm:px-6 py-3 sm:py-4 text-base sm:text-lg border-0 rounded-xl bg-white text-gray-800  focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50 shadow-lg pr-10 sm:pr-12"
                   />
                   <button
                     type="button"

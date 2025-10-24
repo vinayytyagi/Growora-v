@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { 
-  FiSearch, 
+import {
   FiPlus, 
   FiFilter, 
   FiChevronDown, 
@@ -12,6 +11,11 @@ import {
   FiUser,
   FiArrowUp
 } from 'react-icons/fi';
+import { BiSearchAlt } from 'react-icons/bi';
+import { HiOutlineViewList } from "react-icons/hi";
+import { LuSparkles } from "react-icons/lu";
+
+
 import Sidebar from '../components/Sidebar';
 import TemplateCard from '../components/TemplateCard';
 
@@ -227,10 +231,10 @@ export default function TemplatesPage() {
             </button>
 
             <div className="flex items-center gap-2 sm:gap-4 flex-1 justify-center lg:justify-start">
-              <span className="px-2 sm:px-3 py-1 bg-green-100 text-green-800 text-xs sm:text-sm font-medium rounded-full">
+              <span className="px-2 sm:px-3 py-1 bg-[#5F9D72] text-white text-xs sm:text-sm font-medium rounded-full">
                 API Status: Pending
               </span>
-              <span className="px-2 sm:px-3 py-1 bg-green-100 text-green-800 text-xs sm:text-sm font-medium rounded-full">
+              <span className="px-2 sm:px-3 py-1 bg-[#5F9D72] text-white text-xs sm:text-sm font-medium rounded-full">
                 Current Plan: Free Forever
               </span>
             </div>
@@ -258,17 +262,17 @@ export default function TemplatesPage() {
                   placeholder="Search Template"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-green-50"
+                  className="w-full pl-10 pr-4 text-black py-3 border-none rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-[#E7F3EF]"
                 />
-                <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <BiSearchAlt className="text-xl absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
               </div>
               
               {/* Create Template Button */}
               <button 
                 onClick={() => router.push('/templates/create')}
-                className="flex items-center gap-2 px-6 py-3 bg-green-500 text-white text-sm font-medium rounded-lg hover:bg-green-600 transition-colors cursor-pointer ml-4"
+                className="flex items-center gap-2 px-6 py-3 bg-[#5F9D72] text-white text-sm font-medium rounded-full hover:bg-green-600 transition-colors cursor-pointer ml-4"
               >
-                <FiPlus className="text-sm" />
+                <FiPlus className="text-lg" />
                 Create Template
               </button>
             </div>
@@ -281,22 +285,27 @@ export default function TemplatesPage() {
               <div className="flex items-center gap-6">
                 <button
                   onClick={() => setActiveTab('All Template')}
-                  className={`pb-2 border-b-2 font-medium whitespace-nowrap cursor-pointer transition-colors ${
+                  className={`pb-2 border-b-2 font-medium whitespace-nowrap cursor-pointer transition-colors 
+                    flex items-center gap-2 ${
                     activeTab === 'All Template'
                       ? 'border-green-500 text-green-600'
                       : 'border-transparent text-gray-500 hover:text-gray-700'
                   }`}
                 >
+                  <HiOutlineViewList  className="text-sm" />
                   All Template
                 </button>
                 <button
                   onClick={() => setActiveTab('AI Suggestions')}
-                  className={`pb-2 border-b-2 font-medium whitespace-nowrap cursor-pointer transition-colors ${
+                  className={`pb-2 border-b-2 font-medium whitespace-nowrap cursor-pointer transition-colors 
+                    flex items-center gap-2
+                    ${
                     activeTab === 'AI Suggestions'
                       ? 'border-green-500 text-green-600'
                       : 'border-transparent text-gray-500 hover:text-gray-700'
                   }`}
                 >
+                  <LuSparkles  className="text-sm" />
                   AI Suggestions
                 </button>
               </div>
@@ -307,7 +316,7 @@ export default function TemplatesPage() {
                   <FiFilter className="text-sm" />
                   <span className="text-sm font-medium">Filters</span>
                 </div>
-                <select className="px-3 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-green-500 cursor-pointer">
+                <select className="px-3 py-1 border border-gray-300 text-black rounded text-sm focus:outline-none focus:ring-2 focus:ring-green-500 cursor-pointer">
                   <option>All templates</option>
                   <option>Approved</option>
                   <option>Draft</option>
