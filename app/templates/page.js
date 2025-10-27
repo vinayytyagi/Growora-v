@@ -23,6 +23,7 @@ export default function TemplatesPage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('All Template');
   const [searchQuery, setSearchQuery] = useState('');
+  // control sidebar visibility on small screens (some places expect this variable)
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // All Template data
@@ -202,53 +203,15 @@ export default function TemplatesPage() {
 
   return (
     <div className="flex min-h-screen bg-gray-50">
-      {/* Mobile Sidebar Overlay */}
-      {sidebarOpen && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
 
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 lg:relative lg:translate-x-0 transition-transform duration-300 ${
-        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-      }`}>
+      <div className='fixed inset-y-0 left-0 z-50 '>
         <Sidebar activeItem="Templates" />
       </div>
 
       {/* Main Content */}
       <div className="flex-1 lg:ml-64">
-        {/* Header */}
-        <div className="bg-white border-b border-gray-200 px-4 sm:px-6 py-4">
-          <div className="flex items-center justify-between">
-            {/* Mobile menu button */}
-            <button
-              onClick={() => setSidebarOpen(true)}
-              className="lg:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 cursor-pointer"
-            >
-              <FiMenu className="text-xl" />
-            </button>
-
-            <div className="flex items-center gap-2 sm:gap-4 flex-1 justify-center lg:justify-start">
-              <span className="px-2 sm:px-3 py-1 bg-[#5F9D72] text-white text-xs sm:text-sm font-medium rounded-full">
-                API Status: Pending
-              </span>
-              <span className="px-2 sm:px-3 py-1 bg-[#5F9D72] text-white text-xs sm:text-sm font-medium rounded-full">
-                Current Plan: Free Forever
-              </span>
-            </div>
-            <div className="flex items-center gap-2 sm:gap-4">
-              <button className="flex items-center gap-1 px-3 sm:px-4 py-2 bg-green-500 text-white text-xs sm:text-sm font-medium rounded-lg hover:bg-green-600 transition-colors cursor-pointer">
-                <FiArrowUp className="text-sm" />
-                <span className="hidden sm:inline">Upgrade Plan</span>
-              </button>
-              <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center cursor-pointer">
-                <FiUser className="text-sm text-gray-600" />
-              </div>
-            </div>
-          </div>
-        </div>
+        
 
         {/* Content Area */}
         <div className="p-4 sm:p-6">

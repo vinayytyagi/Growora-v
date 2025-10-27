@@ -1,5 +1,6 @@
 'use client';
 
+import { Dropzone, DropzoneContent, DropzoneEmptyState } from '@/components/ui/shadcn-io/dropzone';
 import { useState } from 'react';
 import { 
   FiMenu,
@@ -29,6 +30,7 @@ export default function CreateTemplatePage() {
     quickReplyTitle: '',
     quickReplyNumber: ''
   });
+  const [files, setFiles] = useState(null);
   const [callToAction,setCallToAcction] = useState(false)
   const [quickReplay,setQuickReplly] = useState(false)
 
@@ -38,21 +40,14 @@ export default function CreateTemplatePage() {
       [field]: value
     }));
   };
-
+  const handleDrop = (files) => {
+    setFiles(files);
+  };
   return (
     <div className="flex min-h-screen bg-gray-50">
-      {/* Mobile Sidebar Overlay */}
-      {sidebarOpen && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
 
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 lg:relative lg:translate-x-0 transition-transform duration-300 ${
-        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-      }`}>
+      <div className='fixed inset-y-0 left-0 z-50 '>
         <Sidebar activeItem="Templates" />
       </div>
 
@@ -61,14 +56,6 @@ export default function CreateTemplatePage() {
         {/* Header */}
         <div className="bg-white border-b border-gray-200 px-4 sm:px-6 py-4">
           <div className="flex items-center justify-between">
-            {/* Mobile menu button */}
-            <button
-              onClick={() => setSidebarOpen(true)}
-              className="lg:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 cursor-pointer"
-            >
-              <FiMenu className="text-xl" />
-            </button>
-
             <div className="flex items-center gap-2 sm:gap-4 flex-1 justify-center lg:justify-start">
               <span className="px-3 sm:px-3 py-1 bg-[#3FB863] text-white text-xs sm:text-sm font-medium rounded-full">
                 API Status: Pending
@@ -123,12 +110,26 @@ export default function CreateTemplatePage() {
                     >
                       <option value="Text">Text</option>
                       <option value="Image">Image</option>
-                      <option value="Video">Video</option>
-                      <option value="Document">Document</option>
                     </select>
                     <FiChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
                   </div>
                 </div>
+                {
+                  (formData.templateType === 'Image' ) && (
+                  <div className='w-full'>
+                    <Dropzone
+                      maxFiles={1}
+                      onDrop={handleDrop}
+                      onError={console.error}
+                      src={files}
+                      
+                    >
+                      <DropzoneEmptyState />
+                      <DropzoneContent />
+                    </Dropzone>
+                  </div>
+                  )
+                }
 
                 {/* Category */}
                 <div>
@@ -295,7 +296,7 @@ export default function CreateTemplatePage() {
                   
                   {/* Preview Content */}
                   <div className="p-4 min-h-96 bg-gray-50 relative">
-                    <div className="bg-white rounded-lg p-4 shadow-sm">
+                    <div className="rounded-lg p-4 shadow-sm bg-[#E7F3EF] relative z-2">
                       {formData.messageBody ? (
                         <div className="text-gray-800 whitespace-pre-wrap">
                           {formData.messageBody}
@@ -305,23 +306,53 @@ export default function CreateTemplatePage() {
                           Your message preview will appear here...
                         </div>
                       )}
+
                       {formData.footer && (
                         <div className="mt-3 pt-3 border-t border-gray-200 text-sm text-gray-600">
                           {formData.footer}
                         </div>
                       )}
+
+                      {/* CTA / Quick Reply preview (uses form data) */}
+                      {(formData.ctaTitle || formData.quickReplyTitle) && (
+                        <div className="mt-4  rounded-lg p-4">
+                          <div className="max-w-md mx-auto">
+                            {formData.ctaTitle && (
+                              <button
+                                type="button"
+                                className="w-full mb-3 px-4 py-2 border-1 border-green-600 text-black rounded-full font-medium hover:bg-green-50 transition-colors"
+                              >
+                                {formData.ctaTitle}
+                              </button>
+                            )}
+
+                            {formData.quickReplyTitle && (
+                              <a href={formData.quickReplyNumber ? `tel:${formData.quickReplyNumber}` : '#'}>
+                                <button
+                                  type="button"
+                                  className="w-full px-4 py-2 border-1 border-green-600 text-black rounded-full font-medium hover:bg-green-50 transition-colors"
+                                >
+                                  {formData.quickReplyTitle}
+                                </button>
+                              </a>
+                            )}
+
+                            <div className="text-right text-xs text-gray-400 mt-2">5:00 pm</div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                     
-                    {/* Background Pattern */}
-                    <div className="absolute inset-0 opacity-5 pointer-events-none">
-                      <div className="grid grid-cols-8 gap-2 h-full">
-                        {Array.from({ length: 64 }).map((_, i) => (
-                          <div key={i} className="text-gray-400 text-xs flex items-center justify-center">
-                            💬
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+                    {/* Background Pattern (same style as chat) */}
+                    <div
+                      className="absolute inset-0 pointer-events-none"
+                      style={{
+                        backgroundImage: "url('/assets/ChatBackground.svg')",
+                        backgroundRepeat: 'repeat',
+                        backgroundPosition: 'center',
+                        opacity: 0.4
+                      }}
+                    />
                   </div>
                 </div>
               </div>
