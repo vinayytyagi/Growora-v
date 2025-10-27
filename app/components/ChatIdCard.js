@@ -2,8 +2,8 @@
 const ChatIdCard = ({data,setChat,selectedChat}) => {
   const {image,name,quate,userId} = data;
 
-  const handleSelect = (user)=>{
-    setChat(user)
+  const handleSelect = (userId)=>{
+    setChat(userId)
   }
   const getSpecialLogo = (user) => {
     if(user.special === "loved"){
@@ -17,7 +17,6 @@ const ChatIdCard = ({data,setChat,selectedChat}) => {
     }
   }
   let isSpecialLogo = getSpecialLogo(data);
-
   return (
     <div onClick={()=>handleSelect(userId)} className={`${userId === selectedChat ? "bg-green-500 text-white" : 'bg-white'} flex gap-2  items-center p-2 border-b-1 border-gray-200 relative cursor-pointer`}>
       <img src={image} alt="user" className='w-14 h-14 rounded-full object-cover'/>

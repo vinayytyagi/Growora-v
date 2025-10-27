@@ -13,7 +13,7 @@ import { PiImageLight } from "react-icons/pi";
 
 const page = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedChat, setSelectedChat] = useState(0);
+  const [selectedChat, setSelectedChat] = useState(1);
   const [text, setText] = useState('');
 
   // Helper: calculate number of months since a date string (expected format dd/mm/yyyy)
@@ -109,6 +109,10 @@ const page = () => {
     }
   }]
 
+  const getUserWithId = (id) => {
+    return userData.find((user) => user.userId === id);
+  };
+
 
   return (
     <div className="flex min-h-screen bg-gray-50">
@@ -188,7 +192,7 @@ const page = () => {
                           })
                         }
                         <div className="input-field absolute gap-2 bottom-[8%] w-[90%] flex  items-center ">
-                         <img className="w-10 h-10 rounded-full object-cover relative" src={userData[0].image}/>
+                         <img className="w-10 h-10 rounded-full object-cover relative" src={getUserWithId(selectedChat).image}/>
                         <input
                           type="text"
                           placeholder="Enter message here..."
@@ -207,7 +211,9 @@ const page = () => {
                       
               </div>
                {/* user Details */}
-              <div className="w-1/4 flex flex-col gap-3 h-[92vh]">
+              {
+                selectedChat && (
+                  <div className="w-1/4 flex flex-col gap-3 h-[92vh]">
                     <h2 className="text-xl font-bold ml-4 mt-2">Customer Details</h2>
 
                     <div className="flex flex-col bg-white w-[80%] mx-auto p-4 rounded-lg gap-3">
@@ -216,8 +222,8 @@ const page = () => {
                           <TfiEmail className="text-2xl" />
                         </div>
                         <div>
-                          <h3>{userData[0].name}</h3>
-                          <p className="text-sm text-[#618A7D]">{userData[0].contactDetails.email}</p>
+                          <h3>{getUserWithId(selectedChat).name}</h3>
+                          <p className="text-sm text-[#618A7D]">{getUserWithId(selectedChat).contactDetails.email}</p>
                         </div>
                       </div>
                     </div>
@@ -229,7 +235,7 @@ const page = () => {
                         </div>
                         <div>
                           <h3>Phone</h3>
-                          <p className="text-sm text-[#618A7D]">{userData[0].contactDetails.phone}</p>
+                          <p className="text-sm text-[#618A7D]">{getUserWithId(selectedChat).contactDetails.phone}</p>
                         </div>
                       </div>
                     </div>
@@ -241,7 +247,7 @@ const page = () => {
                         </div>
                         <div>
                           <h3>Adress</h3>
-                          <p className="text-xs text-[#618A7D]">{userData[0].contactDetails.adress}</p>
+                          <p className="text-xs text-[#618A7D]">{getUserWithId(selectedChat).contactDetails.adress}</p>
                         </div>
                       </div>
                     </div>
@@ -255,8 +261,8 @@ const page = () => {
                           <h3>Member Since</h3>
                           <p className="text-sm text-[#618A7D]">
                             {(() => {
-                              const months = getMonthsSince(userData[0].contactDetails.joinDate);
-                              if (months === null) return userData[0].contactDetails.joinDate;
+                              const months = getMonthsSince(getUserWithId(selectedChat).contactDetails.joinDate);
+                              if (months === null) return getUserWithId(selectedChat).contactDetails.joinDate;
                               if (months === 0) return 'Less than a month ago';
                               return `Joined ${months} month${months > 1 ? 's' : ''} ago`;
                             })()}
@@ -265,6 +271,8 @@ const page = () => {
                       </div>
                     </div>
               </div>
+              )
+              }
             </div>
           </div>
     </div>
