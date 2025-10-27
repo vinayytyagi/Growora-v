@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { 
-  FiSearch, 
+import {
   FiPlus, 
   FiFilter, 
   FiChevronDown, 
@@ -12,6 +11,11 @@ import {
   FiUser,
   FiArrowUp
 } from 'react-icons/fi';
+import { BiSearchAlt } from 'react-icons/bi';
+import { HiOutlineViewList } from "react-icons/hi";
+import { LuSparkles } from "react-icons/lu";
+
+
 import Sidebar from '../components/Sidebar';
 import TemplateCard from '../components/TemplateCard';
 
@@ -19,6 +23,7 @@ export default function TemplatesPage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('All Template');
   const [searchQuery, setSearchQuery] = useState('');
+  // control sidebar visibility on small screens (some places expect this variable)
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // All Template data
@@ -198,53 +203,15 @@ export default function TemplatesPage() {
 
   return (
     <div className="flex min-h-screen bg-gray-50">
-      {/* Mobile Sidebar Overlay */}
-      {sidebarOpen && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
 
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 lg:relative lg:translate-x-0 transition-transform duration-300 ${
-        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-      }`}>
+      <div className='fixed inset-y-0 left-0 z-50 '>
         <Sidebar activeItem="Templates" />
       </div>
 
       {/* Main Content */}
       <div className="flex-1 lg:ml-64">
-        {/* Header */}
-        <div className="bg-white border-b border-gray-200 px-4 sm:px-6 py-4">
-          <div className="flex items-center justify-between">
-            {/* Mobile menu button */}
-            <button
-              onClick={() => setSidebarOpen(true)}
-              className="lg:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 cursor-pointer"
-            >
-              <FiMenu className="text-xl" />
-            </button>
-
-            <div className="flex items-center gap-2 sm:gap-4 flex-1 justify-center lg:justify-start">
-              <span className="px-2 sm:px-3 py-1 bg-green-100 text-green-800 text-xs sm:text-sm font-medium rounded-full">
-                API Status: Pending
-              </span>
-              <span className="px-2 sm:px-3 py-1 bg-green-100 text-green-800 text-xs sm:text-sm font-medium rounded-full">
-                Current Plan: Free Forever
-              </span>
-            </div>
-            <div className="flex items-center gap-2 sm:gap-4">
-              <button className="flex items-center gap-1 px-3 sm:px-4 py-2 bg-green-500 text-white text-xs sm:text-sm font-medium rounded-lg hover:bg-green-600 transition-colors cursor-pointer">
-                <FiArrowUp className="text-sm" />
-                <span className="hidden sm:inline">Upgrade Plan</span>
-              </button>
-              <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center cursor-pointer">
-                <FiUser className="text-sm text-gray-600" />
-              </div>
-            </div>
-          </div>
-        </div>
+        
 
         {/* Content Area */}
         <div className="p-4 sm:p-6">
@@ -258,17 +225,17 @@ export default function TemplatesPage() {
                   placeholder="Search Template"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-green-50"
+                  className="w-full pl-10 pr-4 text-black py-3 border-none rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-[#E7F3EF]"
                 />
-                <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <BiSearchAlt className="text-xl absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
               </div>
               
               {/* Create Template Button */}
               <button 
                 onClick={() => router.push('/templates/create')}
-                className="flex items-center gap-2 px-6 py-3 bg-green-500 text-white text-sm font-medium rounded-lg hover:bg-green-600 transition-colors cursor-pointer ml-4"
+                className="flex items-center gap-2 px-6 py-3 bg-[#5F9D72] text-white text-sm font-medium rounded-full hover:bg-green-600 transition-colors cursor-pointer ml-4"
               >
-                <FiPlus className="text-sm" />
+                <FiPlus className="text-lg" />
                 Create Template
               </button>
             </div>
@@ -281,22 +248,27 @@ export default function TemplatesPage() {
               <div className="flex items-center gap-6">
                 <button
                   onClick={() => setActiveTab('All Template')}
-                  className={`pb-2 border-b-2 font-medium whitespace-nowrap cursor-pointer transition-colors ${
+                  className={`pb-2 border-b-2 font-medium whitespace-nowrap cursor-pointer transition-colors 
+                    flex items-center gap-2 ${
                     activeTab === 'All Template'
                       ? 'border-green-500 text-green-600'
                       : 'border-transparent text-gray-500 hover:text-gray-700'
                   }`}
                 >
+                  <HiOutlineViewList  className="text-sm" />
                   All Template
                 </button>
                 <button
                   onClick={() => setActiveTab('AI Suggestions')}
-                  className={`pb-2 border-b-2 font-medium whitespace-nowrap cursor-pointer transition-colors ${
+                  className={`pb-2 border-b-2 font-medium whitespace-nowrap cursor-pointer transition-colors 
+                    flex items-center gap-2
+                    ${
                     activeTab === 'AI Suggestions'
                       ? 'border-green-500 text-green-600'
                       : 'border-transparent text-gray-500 hover:text-gray-700'
                   }`}
                 >
+                  <LuSparkles  className="text-sm" />
                   AI Suggestions
                 </button>
               </div>
@@ -307,7 +279,7 @@ export default function TemplatesPage() {
                   <FiFilter className="text-sm" />
                   <span className="text-sm font-medium">Filters</span>
                 </div>
-                <select className="px-3 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-green-500 cursor-pointer">
+                <select className="px-3 py-1 border border-gray-300 text-black rounded text-sm focus:outline-none focus:ring-2 focus:ring-green-500 cursor-pointer">
                   <option>All templates</option>
                   <option>Approved</option>
                   <option>Draft</option>

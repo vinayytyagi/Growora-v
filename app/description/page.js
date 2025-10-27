@@ -73,7 +73,7 @@ export default function DescriptionPage() {
                   onChange={(e) => setBusinessDescription(e.target.value)}
                   placeholder="Describe your business, what products or services you offer, and what makes you unique..."
                   rows={4}
-                  className="w-full max-w-md mx-auto px-4 sm:px-6 py-3 sm:py-4 text-base sm:text-lg border-0 rounded-xl bg-white text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50 shadow-lg resize-none"
+                  className="w-full max-w-md mx-auto px-4 sm:px-6 py-3 sm:py-4 text-base sm:text-lg border-0 rounded-xl bg-white text-gray-800  focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50 shadow-lg resize-none"
                 />
               </div>
 
